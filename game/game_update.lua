@@ -138,28 +138,6 @@ function hiting_border()
     p.y = mid(0, p.y, 127 - 16)
 end
 
-function collision_enemies_bullets()
-    for enemy in all(enemies) do
-        for bullet in all(b) do
-            if collide(enemy, bullet) then
-                del(b, bullet)
-                smol_shwave(bullet.x, bullet.y)
-                smol_spark(bullet.x, bullet.y)
-                if enemy.live <= 0 then
-                    del(enemies, enemy)
-                    explode(enemy.x + 4, enemy.y + 4, false)
-                    p.score += 100
-                    sfx(3)
-                end
-                enemy.sprite = 40
-                enemy.live -= 1
-                sfx(2)
-                break
-            end
-        end
-    end
-end
-
 function update_enemies()
     for enemy in all(enemies) do
         if enemy.y <= 128 then
@@ -168,8 +146,8 @@ function update_enemies()
             enemy.y = -8
             enemy.x = rnd(128)
         end
-        if enemy.sprite >= 39 then
-            enemy.sprite = 36
+        if enemy.sprite >= 55 then
+            enemy.sprite = 52
         else
             enemy.sprite += 1
         end
@@ -185,6 +163,28 @@ function update_enemies()
             end
         end
         p.invul -= 1
+    end
+end
+
+function collision_enemies_bullets()
+    for enemy in all(enemies) do
+        for bullet in all(b) do
+            if collide(enemy, bullet) then
+                del(b, bullet)
+                smol_shwave(bullet.x, bullet.y)
+                smol_spark(bullet.x, bullet.y)
+                if enemy.live <= 0 then
+                    del(enemies, enemy)
+                    explode(enemy.x + 4, enemy.y + 4, false)
+                    p.score += 100
+                    sfx(3)
+                end
+                enemy.sprite = 56
+                enemy.live -= 1
+                sfx(2)
+                break
+            end
+        end
     end
 end
 

@@ -25,7 +25,6 @@ function init_game()
 end
 
 function update_game()
-    -- controls
     if btn(0) then
         p.x -= p.speed
         p.sprite = 1
