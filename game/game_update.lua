@@ -171,8 +171,9 @@ function collision_enemies_bullets()
         for bullet in all(b) do
             if collide(enemy, bullet) then
                 del(b, bullet)
-                smol_shwave(bullet.x, bullet.y)
-                smol_spark(bullet.x, bullet.y)
+                small_shwave(bullet.x, bullet.y)
+                small_spark(bullet.x, bullet.y)
+                enemy.y -= 2
                 if enemy.live <= 0 then
                     del(enemies, enemy)
                     explode(enemy.x + 4, enemy.y + 4, false)
@@ -188,7 +189,7 @@ function collision_enemies_bullets()
     end
 end
 
-function smol_shwave(x, y)
+function small_shwave(x, y)
     local mysw = {}
     mysw.x = x
     mysw.y = y
@@ -212,7 +213,7 @@ function big_shwave(x, y)
     add(shwaves, mysw)
 end
 
-function smol_spark(x, y)
+function small_spark(x, y)
     local myp = {}
     myp.x = x
     myp.y = y
@@ -223,7 +224,6 @@ function smol_spark(x, y)
     myp.age = rnd(2)
     myp.size = 1 + rnd(4)
     myp.maxage = 10 + rnd(10)
-    myp.blue = isblue
     myp.spark = true
 
     add(particules, myp)
