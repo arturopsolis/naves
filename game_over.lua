@@ -8,7 +8,7 @@ end
 
 function update_gameover()
     if btnp(🅾️) then
-        change_scene("game")
+        change_to_scene("game")
     end
 end
 

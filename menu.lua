@@ -4,7 +4,7 @@ end
 
 function update_menu()
     if btnp(❎) then
-        change_scene("game")
+        change_to_scene("game")
     end
 end
 
