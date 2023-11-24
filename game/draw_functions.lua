@@ -14,6 +14,7 @@ end
 function draw_blast()
     if p.blast > 0 then
         circfill(p.x + 3, p.y - 1, p.blast, 7)
+        circfill(p.x + 4, p.y - 1, p.blast, 7)
     end
 end
 

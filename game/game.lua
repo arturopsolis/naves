@@ -23,14 +23,14 @@ function update_game()
         if p.bullet_timer <= 0 then
             --new bullet
             local new_bullet = {}
-            new_bullet.x = p.x
+            new_bullet.x = p.x + 1
             new_bullet.y = p.y - 8
-            new_bullet.h = 8
-            new_bullet.w = 8
+            new_bullet.h = 6
+            new_bullet.w = 6
             add(b, new_bullet)
 
-            p.blast = 6
             sfx(0)
+            p.blast = 5
             p.bullet_timer = 4
         end
     end
