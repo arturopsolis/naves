@@ -99,11 +99,11 @@ function explode(x, y, isblue)
     big_shwave(x, y)
 end
 
-function spawn_enemies(num, type)
+function spawn_enemies(type, num, x, y)
     for i = 1, num do
         local new_enemy = {
-            x = rnd(108) + 8,
-            y = rnd(60) - 60,
+            x = x,
+            y = y,
             h = 8,
             w = 8,
             tile_w = 1,
@@ -112,7 +112,7 @@ function spawn_enemies(num, type)
             type = type
         }
 
-        if type == 1 then
+        if type == nil or type == 1 then
             new_enemy.sprites = { 36, 37, 38, 39 }
             new_enemy.live = 2
             new_enemy.speed = 1
@@ -162,12 +162,12 @@ end
 
 function update_enemies()
     for enemy in all(enemies) do
-        if enemy.y <= 128 then
+        --[[ if enemy.y <= 128 then
             enemy.y += enemy.speed
         else
             enemy.y = -8
             enemy.x = rnd(128)
-        end
+        end ]]
         -- animation
         if enemy.frameIndex >= #enemy.sprites then
             enemy.frameIndex = 1

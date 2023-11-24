@@ -19,25 +19,52 @@ end
 
 function spawn_wave()
     if wave == 1 then
-        spawn_enemies(3, 1)
+        place_enemies({
+            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
+        })
+    elseif wave == 2 then
+        place_enemies({
+            { 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 },
+            { 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 },
+            { 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 },
+            { 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 }
+        })
+    elseif wave == 3 then
+        place_enemies({
+            { 3, 3, 0, 2, 3, 3, 2, 0, 3, 3 },
+            { 3, 3, 0, 2, 2, 2, 2, 0, 3, 3 },
+            { 3, 3, 0, 1, 1, 1, 1, 0, 3, 3 },
+            { 3, 3, 0, 1, 1, 1, 1, 0, 3, 3 }
+        })
+    elseif wave == 4 then
+        place_enemies({
+            { 3, 3, 0, 2, 3, 3, 2, 0, 3, 3 },
+            { 3, 3, 0, 2, 2, 2, 2, 0, 3, 3 },
+            { 3, 3, 0, 1, 1, 1, 1, 0, 3, 3 },
+            { 3, 3, 0, 1, 1, 1, 1, 0, 3, 3 }
+        })
+    elseif wave == 5 then
+        place_enemies({
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 5, 5, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 5, 5, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+        })
     end
-    if wave == 2 then
-        spawn_enemies(2, 1)
-        spawn_enemies(4, 2)
-    end
-    if wave == 3 then
-        spawn_enemies(2, 1)
-        spawn_enemies(3, 2)
-        spawn_enemies(3, 3)
-    end
-    if wave == 4 then
-        spawn_enemies(2, 1)
-        spawn_enemies(3, 2)
-        spawn_enemies(3, 3)
-        spawn_enemies(4, 4)
-    end
-    if wave == 5 then
-        spawn_enemies(6, 5)
+end
+
+function place_enemies(level)
+    for y = 1, 4 do
+        local myline = level[y]
+        local myrow = level[x]
+        for x = 1, 10 do
+            if myline[x] != 0 then
+                spawn_enemies(myline[x], 1, x * 12 - 6, 4 + y * 12)
+            end
+        end
     end
 end
 
