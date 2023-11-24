@@ -1,4 +1,5 @@
 function init_game()
+    starExtraSpeed = 0
 end
 
 function update_game()

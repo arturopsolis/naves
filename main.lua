@@ -21,6 +21,7 @@ function _init()
     particules = {}
     shwaves = {}
     stars = {}
+    starExtraSpeed = 0
 
     generate_stars()
 

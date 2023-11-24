@@ -1,5 +1,6 @@
 function init_wave()
     init_game()
+    starExtraSpeed = 2
 end
 
 function update_wave()
@@ -21,22 +22,19 @@ function spawn_wave()
         spawn_enemies(3, 1)
     end
     if wave == 2 then
-        spawn_enemies(1, 5)
-        spawn_enemies(3, 1)
-        spawn_enemies(3, 2)
+        spawn_enemies(2, 1)
+        spawn_enemies(4, 2)
     end
     if wave == 3 then
-        spawn_enemies(1, 5)
-        spawn_enemies(2, 2)
-        spawn_enemies(2, 3)
-        spawn_enemies(3, 4)
+        spawn_enemies(2, 1)
+        spawn_enemies(3, 2)
+        spawn_enemies(3, 3)
     end
     if wave == 4 then
         spawn_enemies(2, 1)
-        spawn_enemies(4, 2)
-        spawn_enemies(4, 3)
+        spawn_enemies(3, 2)
+        spawn_enemies(3, 3)
         spawn_enemies(4, 4)
-        spawn_enemies(1, 5)
     end
     if wave == 5 then
         spawn_enemies(6, 5)

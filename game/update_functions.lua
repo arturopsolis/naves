@@ -117,15 +117,15 @@ function spawn_enemies(num, type)
             new_enemy.live = 2
             new_enemy.speed = 1
         elseif type == 2 then
-            new_enemy.sprites = { 52, 53, 54, 55 }
+            new_enemy.sprites = { 120, 121, 122, 123 }
             new_enemy.live = 3
             new_enemy.speed = 1
         elseif type == 3 then
-            new_enemy.sprites = { 120, 121, 122, 123 }
+            new_enemy.sprites = { 80, 81 }
             new_enemy.live = 4
             new_enemy.speed = 1
         elseif type == 4 then
-            new_enemy.sprites = { 80, 81 }
+            new_enemy.sprites = { 72, 73, 74, 75 }
             new_enemy.live = 8
             new_enemy.speed = 1
         elseif type == 5 then
@@ -143,7 +143,7 @@ function spawn_enemies(num, type)
 end
 
 function animate_flame()
-    p.flamespr += 1
+    p.flamespr = p.flamespr + .7
     if p.flamespr >= 9 then
         p.flamespr = 5
     end
@@ -261,7 +261,7 @@ end
 function animate_stars()
     for i = 1, #stars do
         local star = stars[i]
-        star.y = star.y + star.speed
+        star.y = star.y + star.speed + starExtraSpeed
         if star.y > 128 then
             star.y = star.y - 128
         end
