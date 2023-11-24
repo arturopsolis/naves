@@ -25,6 +25,8 @@ function update_game()
             local new_bullet = {}
             new_bullet.x = p.x
             new_bullet.y = p.y - 8
+            new_bullet.h = 8
+            new_bullet.w = 8
             add(b, new_bullet)
 
             p.blast = 6
