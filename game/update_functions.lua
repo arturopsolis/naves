@@ -99,24 +99,46 @@ function explode(x, y, isblue)
     big_shwave(x, y)
 end
 
-function spawn_enemies(num)
+function spawn_enemies(num, type)
     for i = 1, num do
-        local enemy = {
-            x = rnd(128),
-            y = rnd(60) - 80,
+        local new_enemy = {
+            x = rnd(108) + 8,
+            y = rnd(60) - 60,
             h = 8,
             w = 8,
-            sprite = 36,
-            anim = { 36, 37, 38, 39 },
-            live = 2
+            tile_w = 1,
+            tile_h = 1,
+            frameIndex = 1,
+            type = type
         }
-        add(enemies, enemy)
-    end
-end
 
-function update_spawn_enemies()
-    if #enemies <= 3 then
-        spawn_enemies(5)
+        if type == 1 then
+            new_enemy.sprites = { 36, 37, 38, 39 }
+            new_enemy.live = 2
+            new_enemy.speed = 1
+        elseif type == 2 then
+            new_enemy.sprites = { 52, 53, 54, 55 }
+            new_enemy.live = 3
+            new_enemy.speed = 1
+        elseif type == 3 then
+            new_enemy.sprites = { 120, 121, 122, 123 }
+            new_enemy.live = 4
+            new_enemy.speed = 1
+        elseif type == 4 then
+            new_enemy.sprites = { 80, 81 }
+            new_enemy.live = 8
+            new_enemy.speed = 1
+        elseif type == 5 then
+            new_enemy.sprites = { 144, 146 }
+            new_enemy.live = 15
+            new_enemy.h = 16
+            new_enemy.w = 16
+            new_enemy.speed = 1
+            new_enemy.tile_w = 2
+            new_enemy.tile_h = 2
+        end
+
+        add(enemies, new_enemy)
     end
 end
 
@@ -141,16 +163,20 @@ end
 function update_enemies()
     for enemy in all(enemies) do
         if enemy.y <= 128 then
-            enemy.y += 1
+            enemy.y += enemy.speed
         else
             enemy.y = -8
             enemy.x = rnd(128)
         end
-        if enemy.sprite >= 55 then
-            enemy.sprite = 52
+        -- animation
+        if enemy.frameIndex >= #enemy.sprites then
+            enemy.frameIndex = 1
+            enemy.sprite = enemy.sprites[enemy.frameIndex]
         else
-            enemy.sprite += 1
+            enemy.frameIndex += .4
         end
+
+        print(enemy.sprite, 120, 120, 7)
         if p.invul <= 0 then
             if collide(p, enemy) then
                 explode(p.x + 4, p.y + 4, true)
@@ -176,13 +202,16 @@ function collision_enemies_bullets()
                 enemy.y -= 2
                 if enemy.live <= 0 then
                     del(enemies, enemy)
+                    sfx(3)
                     explode(enemy.x + 4, enemy.y + 4, false)
                     p.score += 100
-                    sfx(3)
                 end
-                enemy.sprite = 56
+                enemy.sprite = 56 --TODO: change to dynamic sprite
                 enemy.live -= 1
                 sfx(2)
+                if #enemies <= 0 then
+                    nextWave()
+                end
                 break
             end
         end

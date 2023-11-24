@@ -1,27 +1,4 @@
 function init_game()
-    p = {
-        y = 96,
-        x = 60,
-        h = 8,
-        w = 8,
-        speed = 2,
-        sprite = 2,
-        flamespr = 5,
-        blast = 0,
-        bullet_timer = 0,
-        invul = 0,
-        score = 0,
-        lives = 3
-    }
-
-    b = {}
-    enemies = {}
-    explosions = {}
-    particules = {}
-    shwaves = {}
-    stars = {}
-
-    generate_stars()
 end
 
 function update_game()
@@ -59,7 +36,6 @@ function update_game()
     hiting_border()
 
     update_enemies()
-    update_spawn_enemies()
     collision_enemies_bullets()
 
     animate_flame()

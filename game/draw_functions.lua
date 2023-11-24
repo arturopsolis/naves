@@ -1,5 +1,3 @@
---game draw space ship
-
 function draw_player()
     spr(p.sprite, p.x, p.y)
 end
@@ -33,7 +31,7 @@ end
 
 function draw_enemies()
     for enemy in all(enemies) do
-        spr(enemy.sprite, enemy.x, enemy.y)
+        spr(enemy.sprites[flr(enemy.frameIndex)], enemy.x, enemy.y, enemy.tile_h, enemy.tile_w)
     end
 end
 
