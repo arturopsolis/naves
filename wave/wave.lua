@@ -45,7 +45,7 @@ function nextWave()
     wave += 1
     waveTime = 80
 
-    if wave > 4 then
+    if wave > 5 then
         change_to_scene("win")
     else
         change_to_scene("wave")

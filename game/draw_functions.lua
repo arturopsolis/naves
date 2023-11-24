@@ -106,4 +106,5 @@ function draw_score()
     for i = 1, p.lives do
         print("♥", i * 8, 8, 9)
     end
+    print(p.score, 100, 8, 10)
 end

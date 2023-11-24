@@ -119,21 +119,21 @@ function spawn_enemies(num, type)
         elseif type == 2 then
             new_enemy.sprites = { 120, 121, 122, 123 }
             new_enemy.live = 3
-            new_enemy.speed = 1
+            new_enemy.speed = 2
         elseif type == 3 then
-            new_enemy.sprites = { 80, 81 }
+            new_enemy.sprites = { 88, 89, 90, 91 }
             new_enemy.live = 4
-            new_enemy.speed = 1
+            new_enemy.speed = 3
         elseif type == 4 then
             new_enemy.sprites = { 72, 73, 74, 75 }
             new_enemy.live = 8
-            new_enemy.speed = 1
+            new_enemy.speed = 3
         elseif type == 5 then
             new_enemy.sprites = { 144, 146 }
             new_enemy.live = 15
             new_enemy.h = 16
             new_enemy.w = 16
-            new_enemy.speed = 1
+            new_enemy.speed = 4
             new_enemy.tile_w = 2
             new_enemy.tile_h = 2
         end
