@@ -1,9 +1,14 @@
 function init_game()
     starExtraSpeed = 0
+    t = 0
 end
 
 function update_game()
     p.sprite = 2
+
+    -- esta variable "t" estara aumentando a travez del jeugo
+    -- se usa para calcular espacios de tiempo entre un evento y otro
+    t += 1
 
     if btn(0) then
         p.x -= p.speed
@@ -40,6 +45,7 @@ function update_game()
 
     update_enemies()
     collision_enemies_bullets()
+    picking()
 
     animate_flame()
     animate_stars()
@@ -58,4 +64,5 @@ function draw_game()
     draw_explosions()
     draw_shock_waves()
     draw_particules()
+    draw_debug()
 end

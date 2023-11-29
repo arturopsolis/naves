@@ -109,3 +109,7 @@ function draw_score()
     end
     print(p.score, 100, 8, 10)
 end
+
+function draw_debug()
+    print(#enemies, 100, 24, 10)
+end

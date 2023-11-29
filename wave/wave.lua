@@ -20,10 +20,10 @@ end
 function spawn_wave()
     if wave == 1 then
         place_enemies({
-            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
-            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
-            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
-            { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
+            { 1, 1, 0, 0, 0, 0, 0, 0, 1, 1 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
         })
     elseif wave == 2 then
         place_enemies({
@@ -62,7 +62,7 @@ function place_enemies(level)
         local myrow = level[x]
         for x = 1, 10 do
             if myline[x] != 0 then
-                spawn_enemies(myline[x], 1, x * 12 - 6, 4 + y * 12)
+                spawn_enemies(myline[x], x * 12 - 6, 4 + y * 12, x * 3)
             end
         end
     end

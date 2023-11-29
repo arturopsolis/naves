@@ -99,46 +99,179 @@ function explode(x, y, isblue)
     big_shwave(x, y)
 end
 
-function spawn_enemies(type, num, x, y)
-    for i = 1, num do
-        local new_enemy = {
-            x = x,
-            y = y,
-            h = 8,
-            w = 8,
-            tile_w = 1,
-            tile_h = 1,
-            frameIndex = 1,
-            type = type
-        }
+function spawn_enemies(type, enx, eny, enemy_wait)
+    local new_enemy = {
+        x = enx * 1.2 - 16,
+        y = eny - 66,
+        posy = eny,
+        posx = enx,
+        h = 8,
+        w = 8,
+        tile_w = 1,
+        tile_h = 1,
+        frameIndex = 1,
+        type = type,
+        mission = "flying",
+        wait = enemy_wait,
+        speed_x = 2,
+        speed_y = 2
+    }
 
-        if type == nil or type == 1 then
-            new_enemy.sprites = { 36, 37, 38, 39 }
-            new_enemy.live = 2
-            new_enemy.speed = 1
-        elseif type == 2 then
-            new_enemy.sprites = { 120, 121, 122, 123 }
-            new_enemy.live = 3
-            new_enemy.speed = 2
-        elseif type == 3 then
-            new_enemy.sprites = { 88, 89, 90, 91 }
-            new_enemy.live = 4
-            new_enemy.speed = 3
-        elseif type == 4 then
-            new_enemy.sprites = { 72, 73, 74, 75 }
-            new_enemy.live = 8
-            new_enemy.speed = 3
-        elseif type == 5 then
-            new_enemy.sprites = { 144, 146 }
-            new_enemy.live = 15
-            new_enemy.h = 16
-            new_enemy.w = 16
-            new_enemy.speed = 4
-            new_enemy.tile_w = 2
-            new_enemy.tile_h = 2
+    if type == nil or type == 1 then
+        new_enemy.sprites = { 36, 37, 38, 39 }
+        new_enemy.live = 2
+        new_enemy.speed_x = 1.7
+        new_enemy.speed_y = 1
+    elseif type == 2 then
+        new_enemy.sprites = { 76, 77, 78, 79 }
+        new_enemy.live = 3
+        new_enemy.speed_x = 1.7
+        new_enemy.speed_y = 1.2
+    elseif type == 3 then
+        new_enemy.sprites = { 88, 89, 90, 91 }
+        new_enemy.live = 4
+        new_enemy.speed_x = 1.7
+        new_enemy.speed_y = 1.2
+    elseif type == 4 then
+        new_enemy.sprites = { 72, 73, 74, 75 }
+        new_enemy.live = 8
+        new_enemy.speed_x = 2
+        new_enemy.speed_y = 1.2
+    elseif type == 5 then
+        new_enemy.sprites = { 144, 146 }
+        new_enemy.live = 15
+        new_enemy.h = 16
+        new_enemy.w = 16
+        new_enemy.tile_w = 2
+        new_enemy.tile_h = 2
+        new_enemy.speed_x = 1.7
+        new_enemy.speed_y = 1.7
+    end
+
+    add(enemies, new_enemy)
+end
+
+function update_enemies()
+    for enemy in all(enemies) do
+        --[[ if enemy.y <= 128 then
+            enemy.y += enemy.speed
+        else
+            enemy.y = -8
+            enemy.x = rnd(128)
+        end ]]
+
+        --enemy mission
+        doEnemy(enemy) --TODO: change function name
+
+        --delete enemy
+        if enemy.y > 128 then
+            del(enemies, enemy)
         end
 
-        add(enemies, new_enemy)
+        -- animation
+        if enemy.frameIndex >= #enemy.sprites then
+            enemy.frameIndex = 1
+            enemy.sprite = enemy.sprites[enemy.frameIndex]
+        else
+            enemy.frameIndex += .4
+        end
+
+        print(enemy.sprite, 120, 120, 7)
+        if p.invul <= 0 then
+            if collide(p, enemy) then
+                explode(p.x + 4, p.y + 4, true)
+                p.lives -= 1
+                p.invul = 300
+                enemy.live -= 1
+                sfx(1)
+                if p.lives <= 0 then
+                    change_to_scene("gameover")
+                end
+            end
+        end
+        p.invul -= 1
+    end
+end
+
+--enemy mission
+function doEnemy(enemy)
+    if enemy.wait > 0 then
+        enemy.wait -= 1
+        return
+    end
+
+    if enemy.mission == "flying" then
+        --flying
+        --basic easing function
+        -- x += (targetx - x)/n
+        enemy.x += (enemy.posx - enemy.x) / 7
+        enemy.y += (enemy.posy - enemy.y) / 7
+
+        if abs(enemy.y - enemy.posy) < 0.7 then
+            enemy.y = enemy.posy
+            enemy.mission = "protect"
+        end
+    elseif enemy.mission == "protect" then
+        --protect
+        --enemy.y += 10
+    elseif enemy.mission == "attack" then
+        --atack!
+        --set sy
+
+        if enemy.type == 1 then
+            enemy.speed_y = 1.7
+            enemy.speed_x = sin(t / 45)
+
+            if enemy.x < 32 then
+                enemy.speed_x += 1 - enemy.x / 32
+            end
+            if enemy.x > 88 then
+                enemy.speed_x -= (enemy.x - 88) / 32
+            end
+
+            move(enemy)
+        end
+
+        if enemy.type == 2 then
+            enemy.speed_y = 2.5
+            enemy.speed_x = sin(t / 20)
+
+            if enemy.x < 32 then
+                enemy.speed_x += 1 - enemy.x / 32
+            end
+            if enemy.x > 88 then
+                enemy.speed_x -= (enemy.x - 88) / 32
+            end
+
+            move(enemy)
+        end
+
+        -- ataque que sigue la posicion del player
+        --[[ enemy.y += enemy.speed_y
+
+            if enemy.x < p.x then
+                enemy.x += enemy.speed_x
+            elseif enemy.x > p.x then
+                enemy.x -= enemy.speed_x
+            end ]]
+    end
+end
+
+function move(obj)
+    obj.x += obj.speed_x
+    obj.y += obj.speed_y
+end
+
+function picking()
+    if scene != "game" then
+        return
+    end
+
+    if t % 60 == 0 and #enemies > 0 then
+        local enemy = rnd(enemies)
+        if enemy.mission == "protect" then
+            enemy.mission = "attack"
+        end
     end
 end
 
@@ -158,38 +291,6 @@ end
 function hiting_border()
     p.x = mid(0, p.x, 120)
     p.y = mid(0, p.y, 127 - 16)
-end
-
-function update_enemies()
-    for enemy in all(enemies) do
-        --[[ if enemy.y <= 128 then
-            enemy.y += enemy.speed
-        else
-            enemy.y = -8
-            enemy.x = rnd(128)
-        end ]]
-        -- animation
-        if enemy.frameIndex >= #enemy.sprites then
-            enemy.frameIndex = 1
-            enemy.sprite = enemy.sprites[enemy.frameIndex]
-        else
-            enemy.frameIndex += .4
-        end
-
-        print(enemy.sprite, 120, 120, 7)
-        if p.invul <= 0 then
-            if collide(p, enemy) then
-                explode(p.x + 4, p.y + 4, true)
-                p.lives -= 1
-                p.invul = 300
-                sfx(1)
-                if p.lives <= 0 then
-                    change_to_scene("gameover")
-                end
-            end
-        end
-        p.invul -= 1
-    end
 end
 
 function collision_enemies_bullets()
