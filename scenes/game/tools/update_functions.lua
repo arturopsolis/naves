@@ -1,5 +1,37 @@
 --game update functions
 
+function player_controls()
+    if btn(0) then
+        p.x -= p.speed
+        p.sprite = 1
+    end
+    if btn(1) then
+        p.x += p.speed
+        p.sprite = 3
+    end
+    if btn(2) then
+        p.y -= p.speed
+    end
+    if btn(3) then
+        p.y += p.speed
+    end
+    if btn(❎) then
+        if p.bullet_timer <= 0 then
+            --new bullet
+            local new_bullet = {}
+            new_bullet.x = p.x + 1
+            new_bullet.y = p.y - 8
+            new_bullet.h = 6
+            new_bullet.w = 6
+            add(b, new_bullet)
+
+            sfx(0)
+            p.blast = 5
+            p.bullet_timer = 4
+        end
+    end
+end
+
 function particule_red_age(age)
     local colr = 7
     if age > 5 then

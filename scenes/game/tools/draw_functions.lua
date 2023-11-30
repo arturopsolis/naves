@@ -111,5 +111,5 @@ function draw_score()
 end
 
 function draw_debug()
-    print(#enemies, 100, 24, 10)
+    --print(#enemies, 100, 24, 10)
 end

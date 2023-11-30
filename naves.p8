@@ -3,12 +3,19 @@ version 41
 __lua__
 
 #include main.lua
-#include tools/wave.lua
+
 #include scenes/menu/menu.lua
-#include scenes/game/game.lua
-#include scenes/game/update_functions.lua
-#include scenes/game/draw_functions.lua
+
+#include scenes/game/init.lua
+#include scenes/game/update.lua
+#include scenes/game/draw.lua
+
+#include scenes/game/tools/update_functions.lua
+#include scenes/game/tools/draw_functions.lua
+#include scenes/game/tools/wave.lua
+
 #include scenes/game_over/game_over.lua
+
 #include scenes/win/win.lua
 
 __gfx__
