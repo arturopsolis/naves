@@ -12,7 +12,7 @@ function _init()
         bullet_timer = 0,
         invul = 0,
         score = 0,
-        lives = 30
+        lives = 5
     }
 
     b = {}
@@ -55,7 +55,7 @@ function _init()
     }
 
     scene = "menu"
-    wave = 2
+    wave = 3
     waveTime = 80
     change_to_scene(scene)
 end

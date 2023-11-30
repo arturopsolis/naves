@@ -114,38 +114,30 @@ function spawn_enemies(type, enx, eny, enemy_wait)
         mission = "flying",
         wait = enemy_wait,
         speed_x = 2,
-        speed_y = 2
+        speed_y = 2,
+        animationSpeed = 0.4
     }
 
     if type == nil or type == 1 then
         new_enemy.sprites = { 36, 37, 38, 39 }
-        new_enemy.live = 2
+        new_enemy.live = 1
         new_enemy.speed_x = 1.7
         new_enemy.speed_y = 1
     elseif type == 2 then
         new_enemy.sprites = { 76, 77, 78, 79 }
-        new_enemy.live = 3
+        new_enemy.live = 2
         new_enemy.speed_x = 1.7
         new_enemy.speed_y = 1.2
     elseif type == 3 then
         new_enemy.sprites = { 88, 89, 90, 91 }
-        new_enemy.live = 4
-        new_enemy.speed_x = 1.7
-        new_enemy.speed_y = 1.2
+        new_enemy.live = 2
+        new_enemy.speed_x = 0
+        new_enemy.speed_y = 1
     elseif type == 4 then
         new_enemy.sprites = { 72, 73, 74, 75 }
-        new_enemy.live = 8
-        new_enemy.speed_x = 2
-        new_enemy.speed_y = 1.2
-    elseif type == 5 then
-        new_enemy.sprites = { 144, 146 }
-        new_enemy.live = 15
-        new_enemy.h = 16
-        new_enemy.w = 16
-        new_enemy.tile_w = 2
-        new_enemy.tile_h = 2
-        new_enemy.speed_x = 1.7
-        new_enemy.speed_y = 1.7
+        new_enemy.live = 16
+        new_enemy.speed_x = 0
+        new_enemy.speed_y = 1
     end
 
     add(enemies, new_enemy)
@@ -153,30 +145,24 @@ end
 
 function update_enemies()
     for enemy in all(enemies) do
-        --[[ if enemy.y <= 128 then
-            enemy.y += enemy.speed
-        else
-            enemy.y = -8
-            enemy.x = rnd(128)
-        end ]]
-
         --enemy mission
         doEnemy(enemy) --TODO: change function name
-
-        --delete enemy
-        if enemy.y > 128 then
-            del(enemies, enemy)
-        end
 
         -- animation
         if enemy.frameIndex >= #enemy.sprites then
             enemy.frameIndex = 1
             enemy.sprite = enemy.sprites[enemy.frameIndex]
         else
-            enemy.frameIndex += .4
+            enemy.frameIndex += enemy.animationSpeed
         end
 
-        print(enemy.sprite, 120, 120, 7)
+        --delete enemy
+        if enemy.mission != "flying" then
+            if enemy.y > 128 or enemy.x < -8 or enemy.x > 128 then
+                del(enemies, enemy)
+            end
+        end
+
         if p.invul <= 0 then
             if collide(p, enemy) then
                 explode(p.x + 4, p.y + 4, true)
@@ -228,8 +214,6 @@ function doEnemy(enemy)
             if enemy.x > 88 then
                 enemy.speed_x -= (enemy.x - 88) / 32
             end
-
-            move(enemy)
         end
 
         if enemy.type == 2 then
@@ -242,18 +226,28 @@ function doEnemy(enemy)
             if enemy.x > 88 then
                 enemy.speed_x -= (enemy.x - 88) / 32
             end
-
-            move(enemy)
         end
 
-        -- ataque que sigue la posicion del player
-        --[[ enemy.y += enemy.speed_y
+        if enemy.type == 3 then
+            if enemy.speed_x == 0 then
+                --flying down
+                enemy.speed_y = 2
+                if p.y <= enemy.y then
+                    enemy.speed_y = 0
+                    if p.x < enemy.x then
+                        enemy.speed_x = -2
+                    else
+                        enemy.speed_x = 2
+                    end
+                end
+            end
+        end
+        if enemy.type == 4 then
+            enemy.speed_x = 0
+            enemy.speed_y = 0.35
+        end
 
-            if enemy.x < p.x then
-                enemy.x += enemy.speed_x
-            elseif enemy.x > p.x then
-                enemy.x -= enemy.speed_x
-            end ]]
+        move(enemy)
     end
 end
 

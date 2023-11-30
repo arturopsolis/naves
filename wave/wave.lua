@@ -41,16 +41,9 @@ function spawn_wave()
         })
     elseif wave == 4 then
         place_enemies({
-            { 3, 3, 0, 2, 3, 3, 2, 0, 3, 3 },
-            { 3, 3, 0, 2, 2, 2, 2, 0, 3, 3 },
-            { 3, 3, 0, 1, 1, 1, 1, 0, 3, 3 },
-            { 3, 3, 0, 1, 1, 1, 1, 0, 3, 3 }
-        })
-    elseif wave == 5 then
-        place_enemies({
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 5, 5, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 5, 5, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 4, 4, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 4, 4, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         })
     end
@@ -72,7 +65,7 @@ function nextWave()
     wave += 1
     waveTime = 80
 
-    if wave > 5 then
+    if wave >= 5 then
         change_to_scene("win")
     else
         change_to_scene("wave")
