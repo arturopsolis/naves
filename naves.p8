@@ -6,8 +6,8 @@ __lua__
 #include menu/menu.lua
 #include game/game.lua
 #include game/update_functions.lua
+#include tools/wave.lua
 #include game/draw_functions.lua
-#include wave/wave.lua
 #include game_over/game_over.lua
 #include win/win.lua
 
