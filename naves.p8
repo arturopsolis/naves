@@ -3,13 +3,13 @@ version 41
 __lua__
 
 #include main.lua
-#include menu/menu.lua
-#include game/game.lua
-#include game/update_functions.lua
 #include tools/wave.lua
-#include game/draw_functions.lua
-#include game_over/game_over.lua
-#include win/win.lua
+#include scenes/menu/menu.lua
+#include scenes/game/game.lua
+#include scenes/game/update_functions.lua
+#include scenes/game/draw_functions.lua
+#include scenes/game_over/game_over.lua
+#include scenes/win/win.lua
 
 __gfx__
 00000000007070000070070000070700000770000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
