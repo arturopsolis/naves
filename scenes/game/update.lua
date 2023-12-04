@@ -1,7 +1,7 @@
 function update_game()
     p.sprite = 2
 
-    -- esta variable "t" estara aumentando a travez del jeugo
+    -- esta variable "t" estara aumentando a travez del juego
     -- se usa para calcular espacios de tiempo entre un evento y otro
     t += 1
 

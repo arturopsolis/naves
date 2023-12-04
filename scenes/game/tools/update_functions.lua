@@ -73,9 +73,7 @@ function particule_blue_age(age)
 end
 
 function explode(x, y, isblue)
-    local speed =
-        --particle speed
-        6
+    local speed = 6
     local myp = {}
     myp.x = x
     myp.y = y
@@ -142,6 +140,7 @@ function spawn_enemies(type, enx, eny, enemy_wait)
         tile_w = 1,
         tile_h = 1,
         frameIndex = 1,
+        flash = 0,
         type = type,
         mission = "flying",
         wait = enemy_wait,
@@ -177,8 +176,8 @@ end
 
 function update_enemies()
     for enemy in all(enemies) do
-        --enemy mission
-        do_enemy(enemy) --TODO: change function name
+        -- enemy mission
+        do_enemy(enemy)
 
         -- animation
         if enemy.frameIndex >= #enemy.sprites then
@@ -188,18 +187,19 @@ function update_enemies()
             enemy.frameIndex += enemy.animationSpeed
         end
 
-        --delete enemy
+        -- delete enemy
         if enemy.mission != "flying" then
             if enemy.y > 128 or enemy.x < -8 or enemy.x > 128 then
                 del(enemies, enemy)
             end
         end
 
+        -- collision player ship and enemies
         if p.invulnerability <= 0 then
             if collide(p, enemy) then
                 explode(p.x + 4, p.y + 4, true)
                 p.lives -= 1
-                p.invulnerability = 300
+                p.invulnerability = 1000
                 enemy.live -= 1
                 sfx(1)
                 if p.lives <= 0 then
@@ -333,6 +333,7 @@ function collision_enemies_bullets()
                 small_shwave(bullet.x, bullet.y)
                 small_spark(bullet.x, bullet.y)
                 enemy.y -= 2
+                enemy.flash = 2
                 if enemy.live <= 0 then
                     del(enemies, enemy)
                     sfx(3)

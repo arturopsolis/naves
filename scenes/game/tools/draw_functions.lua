@@ -1,4 +1,16 @@
 function draw_player()
+    if p.invulnerability <= 0 then
+        draw_ship()
+        draw_ship_flame()
+    else
+        if sin(t / 5) < 0 then
+            draw_ship()
+            draw_ship_flame()
+        end
+    end
+end
+
+function draw_ship()
     spr(p.sprite, p.x, p.y)
 end
 
@@ -32,7 +44,14 @@ end
 
 function draw_enemies()
     for enemy in all(enemies) do
+        if enemy.flash > 0 then
+            enemy.flash -= 1
+            for i = 1, 15 do
+                pal(i, 7)
+            end
+        end
         spr(enemy.sprites[flr(enemy.frameIndex)], enemy.x, enemy.y, enemy.tile_h, enemy.tile_w)
+        pal()
     end
 end
 
@@ -91,7 +110,6 @@ function draw_explosions()
 end
 
 --draw background
-
 function draw_stars()
     for i = 1, #stars do
         pset(
@@ -102,7 +120,7 @@ function draw_stars()
     end
 end
 
---ui
+--draw ui
 function draw_score()
     for i = 1, p.lives do
         print("♥", i * 8, 4, 8)
@@ -111,5 +129,5 @@ function draw_score()
 end
 
 function draw_debug()
-    --print(#enemies, 100, 24, 10)
+    --print(p.invulnerability, 100, 24, 10)
 end

@@ -10,7 +10,7 @@ function _init()
         flames_sprite = 5,
         blast = 0,
         bullet_timer = 0,
-        invulnerability = 0, --invulnerability
+        invulnerability = 0,
         score = 0,
         lives = 3
     }
