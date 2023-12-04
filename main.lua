@@ -7,21 +7,20 @@ function _init()
         w = 8,
         speed = 2,
         sprite = 2,
-        flamespr = 5,
+        flames_sprite = 5,
         blast = 0,
         bullet_timer = 0,
-        invul = 0,
+        invulnerability = 0, --invulnerability
         score = 0,
         lives = 3
     }
 
-    b = {}
+    bullets = {}
     enemies = {}
     explosions = {}
     particules = {}
     shwaves = {}
     stars = {}
-    starExtraSpeed = 0
 
     generate_stars()
 

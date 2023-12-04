@@ -4,10 +4,10 @@ end
 
 function draw_ship_flame()
     if p.sprite == 2 then
-        spr(p.flamespr, p.x - 2, p.y + 8)
-        spr(p.flamespr, p.x + 2, p.y + 8)
+        spr(p.flames_sprite, p.x - 2, p.y + 8)
+        spr(p.flames_sprite, p.x + 2, p.y + 8)
     else
-        spr(p.flamespr, p.x, p.y + 8)
+        spr(p.flames_sprite, p.x, p.y + 8)
     end
 end
 
@@ -19,11 +19,11 @@ function draw_blast()
 end
 
 function draw_bullets()
-    for mybull in all(b) do
+    for mybull in all(bullets) do
         spr(16, mybull.x, mybull.y)
         mybull.y -= 4
         if mybull.y < -8 then
-            del(b, mybull)
+            del(bullets, mybull)
         end
     end
 end

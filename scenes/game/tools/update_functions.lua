@@ -23,7 +23,7 @@ function player_controls()
             new_bullet.y = p.y - 8
             new_bullet.h = 6
             new_bullet.w = 6
-            add(b, new_bullet)
+            add(bullets, new_bullet)
 
             sfx(0)
             p.blast = 5
@@ -195,11 +195,11 @@ function update_enemies()
             end
         end
 
-        if p.invul <= 0 then
+        if p.invulnerability <= 0 then
             if collide(p, enemy) then
                 explode(p.x + 4, p.y + 4, true)
                 p.lives -= 1
-                p.invul = 300
+                p.invulnerability = 300
                 enemy.live -= 1
                 sfx(1)
                 if p.lives <= 0 then
@@ -207,7 +207,7 @@ function update_enemies()
                 end
             end
         end
-        p.invul -= 1
+        p.invulnerability -= 1
     end
 end
 
@@ -308,9 +308,9 @@ function picking()
 end
 
 function animate_flame()
-    p.flamespr = p.flamespr + .7
-    if p.flamespr >= 9 then
-        p.flamespr = 5
+    p.flames_sprite = p.flames_sprite + .7
+    if p.flames_sprite >= 9 then
+        p.flames_sprite = 5
     end
 end
 
@@ -327,9 +327,9 @@ end
 
 function collision_enemies_bullets()
     for enemy in all(enemies) do
-        for bullet in all(b) do
+        for bullet in all(bullets) do
             if collide(enemy, bullet) then
-                del(b, bullet)
+                del(bullets, bullet)
                 small_shwave(bullet.x, bullet.y)
                 small_spark(bullet.x, bullet.y)
                 enemy.y -= 2
@@ -339,7 +339,6 @@ function collision_enemies_bullets()
                     explode(enemy.x + 4, enemy.y + 4, false)
                     p.score += 100
                 end
-                enemy.sprite = 56 --TODO: change to dynamic sprite
                 enemy.live -= 1
                 sfx(2)
                 break
@@ -391,7 +390,7 @@ end
 function animate_stars()
     for i = 1, #stars do
         local star = stars[i]
-        star.y = star.y + star.speed + starExtraSpeed
+        star.y = star.y + star.speed
         if star.y > 128 then
             star.y = star.y - 128
         end

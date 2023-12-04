@@ -1,6 +1,5 @@
 function init_wave()
     init_game()
-    starExtraSpeed = 2
 end
 
 function update_wave()
