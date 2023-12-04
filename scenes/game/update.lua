@@ -11,6 +11,9 @@ function update_game()
     hiting_border()
 
     update_enemies()
+
+    go_next_wave()
+
     collision_enemies_bullets()
     picking()
 

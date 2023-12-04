@@ -178,7 +178,7 @@ end
 function update_enemies()
     for enemy in all(enemies) do
         --enemy mission
-        doEnemy(enemy) --TODO: change function name
+        do_enemy(enemy) --TODO: change function name
 
         -- animation
         if enemy.frameIndex >= #enemy.sprites then
@@ -211,8 +211,14 @@ function update_enemies()
     end
 end
 
+function go_next_wave()
+    if #enemies <= 0 and scene == "game" then
+        nextWave()
+    end
+end
+
 --enemy mission
-function doEnemy(enemy)
+function do_enemy(enemy)
     if enemy.wait > 0 then
         enemy.wait -= 1
         return
@@ -336,9 +342,6 @@ function collision_enemies_bullets()
                 enemy.sprite = 56 --TODO: change to dynamic sprite
                 enemy.live -= 1
                 sfx(2)
-                if #enemies <= 0 then
-                    nextWave()
-                end
                 break
             end
         end

@@ -14,7 +14,7 @@ end
 
 function draw_wave()
     draw_game()
-    print("wave " .. wave, 54, 40, 12)
+    print("wave " .. wave, 54, 40, 7)
 end
 
 function spawn_wave()
