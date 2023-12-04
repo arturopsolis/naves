@@ -12,7 +12,7 @@ function _init()
         bullet_timer = 0,
         invul = 0,
         score = 0,
-        lives = 5
+        lives = 3
     }
 
     b = {}

@@ -105,9 +105,9 @@ end
 --ui
 function draw_score()
     for i = 1, p.lives do
-        print("♥", i * 8, 8, 8)
+        print("♥", i * 8, 4, 8)
     end
-    print(p.score, 100, 8, 10)
+    print(p.score, 100, 4, 10)
 end
 
 function draw_debug()
